@@ -5,6 +5,7 @@ RUN go mod tidy
 RUN CGO_ENABLED=0 go build -ldflags "-X main.GitCommit=$(git rev-parse --short HEAD)" -o ./bin/nanit ./cmd/nanit/*.go
 
 FROM alpine
+RUN apk add --no-cache ffmpeg
 RUN mkdir -p /app/data
 COPY --from=build /app/bin/nanit /app/bin/nanit
 WORKDIR /app
